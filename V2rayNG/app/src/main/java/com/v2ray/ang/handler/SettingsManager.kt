@@ -37,9 +37,26 @@ object SettingsManager {
     @Volatile
     private var runtimeSocksPort: Int? = null
 
+    private fun ensureBrandSubscription() {
+        val url = AppConfig.DEFAULT_SUB_URL
+        if (url.isBlank()) return
+        val exists = MmkvManager.decodeSubscriptions().any { it.subscription.url == url }
+        if (exists) return
+        MmkvManager.encodeSubscription(
+            "",
+            com.v2ray.ang.dto.entities.SubscriptionItem(
+                remarks = AppConfig.DEFAULT_SUB_NAME,
+                url = url,
+                enabled = true,
+                autoUpdate = true,
+                updateInterval = 60,
+            )
+        )
+    }
+
     fun initApp(context: Context) {
         ensureDefaultSettings()
-        //ensureDefaultSubscription()
+        ensureBrandSubscription()
         initRoutingRulesets(context)
         migrateServerListToSubscriptions()
         migrateHysteria2PinSHA256()

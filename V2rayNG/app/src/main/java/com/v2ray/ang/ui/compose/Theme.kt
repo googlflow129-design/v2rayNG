@@ -65,47 +65,47 @@ private val LightColor = lightColorScheme(
 )
 
 private val DarkColor = darkColorScheme(
-    primary = Color(0xFFC0C0C0), // Silver Gray
-    onPrimary = Color(0xFF303030), // Dark Gray
-    primaryContainer = Color(0xFF474747), // Gray
-    onPrimaryContainer = Color(0xFFE0E0E0), // Light Gray
-    secondary = Color(0xFFf97910), // Orange
-    onSecondary = Color(0xFF4E2600), // Dark Brown
-    secondaryContainer = Color(0xFF6F3800), // Brown
-    onSecondaryContainer = Color(0xFFFFE8D6), // Pale Orange
-    tertiary = Color(0xFF83D6B5), // Mint Green
-    onTertiary = Color(0xFF00382E), // Dark Teal
-    tertiaryContainer = Color(0xFF005143), // Teal
-    onTertiaryContainer = Color(0xFFA0F2D0), // Light Green
-    error = Color(0xFFFFB4AB), // Light Red
-    errorContainer = Color(0xFF93000A), // Dark Red
-    onError = Color(0xFF690005), // Deep Red
-    onErrorContainer = Color(0xFFFFDAD6), // Light Red
-    background = Color(0xFF1C1B1F), // Near Black
-    onBackground = Color(0xFFE6E1E5), // Light Gray
-    surface = Color(0xFF1C1B1F), // Near Black
-    onSurface = Color(0xFFE6E1E5), // Light Gray
-    surfaceVariant = Color(0xFF49454F), // Dark Gray
-    onSurfaceVariant = Color(0xFFCAC4D0), // Light Gray
-    outline = Color(0xFF938F99), // Grayish Purple
-    outlineVariant = Color(0xFF49454F), // Dark Gray
-    inverseSurface = Color(0xFFE6E1E5), // Light Gray
-    inverseOnSurface = Color(0xFF1C1B1F), // Near Black
-    inversePrimary = Color(0xFF000000), // Black
-    scrim = Color(0xFF000000), // Black
-    surfaceTint = Color(0xFFC0C0C0), // Silver Gray
-    surfaceContainerLowest = Color(0xFF0F0F12), // Near Black
-    surfaceContainerLow = Color(0xFF1A191D), // Dark Gray
-    surfaceContainer = Color(0xFF1E1D21), // Dark Gray
-    surfaceContainerHigh = Color(0xFF282729), // Dark Gray
-    surfaceContainerHighest = Color(0xFF333234), // Dark Gray
+    primary = Color(0xFFFFD600),
+    onPrimary = Color(0xFF000000),
+    primaryContainer = Color(0xFF3A3000),
+    onPrimaryContainer = Color(0xFFFFE766),
+    secondary = Color(0xFFFFC107),
+    onSecondary = Color(0xFF000000),
+    secondaryContainer = Color(0xFF332800),
+    onSecondaryContainer = Color(0xFFFFE08A),
+    tertiary = Color(0xFFFFEB3B),
+    onTertiary = Color(0xFF000000),
+    tertiaryContainer = Color(0xFF3A3500),
+    onTertiaryContainer = Color(0xFFFFF59D),
+    error = Color(0xFFFFB4AB),
+    errorContainer = Color(0xFF93000A),
+    onError = Color(0xFF690005),
+    onErrorContainer = Color(0xFFFFDAD6),
+    background = Color(0xFF000000),
+    onBackground = Color(0xFFFFF8E1),
+    surface = Color(0xFF000000),
+    onSurface = Color(0xFFFFF8E1),
+    surfaceVariant = Color(0xFF1C1A10),
+    onSurfaceVariant = Color(0xFFE0D8B0),
+    outline = Color(0xFF8A7A20),
+    outlineVariant = Color(0xFF3A3410),
+    inverseSurface = Color(0xFFFFF8E1),
+    inverseOnSurface = Color(0xFF000000),
+    inversePrimary = Color(0xFF6E5C00),
+    scrim = Color(0xFF000000),
+    surfaceTint = Color(0xFFFFD600),
+    surfaceContainerLowest = Color(0xFF000000),
+    surfaceContainerLow = Color(0xFF0A0A06),
+    surfaceContainer = Color(0xFF12110A),
+    surfaceContainerHigh = Color(0xFF1A190E),
+    surfaceContainerHighest = Color(0xFF222012),
 )
 
 // Semantic Colors
 val colorPing = Color(0xFF009966) // Green
 val colorPingRed = Color(0xFFFF0099) // Pink Red
-val colorConfigType = Color(0xFFf97910) // Orange
-val colorFabActive = Color(0xFFf97910) // Orange
+val colorConfigType = Color(0xFFFFD600) // Yellow
+val colorFabActive = Color(0xFFFFD600) // Yellow
 val colorFabInactiveLight = Color(0xFF9C9C9C) // Gray
 val colorFabInactiveDark = Color(0xFF646464) // Dark Gray
 val dividerColorLight = Color(0xFFE0E0E0) // Light Gray
@@ -153,9 +153,7 @@ object ThemeManager {
 fun resolveDarkTheme(): Boolean {
     val mode by ThemeManager.themeMode.collectAsState()
     return when (mode) {
-        "1" -> false
-        "2" -> true
-        else -> isSystemInDarkTheme()
+        else -> true // always black/yellow
     }
 }
 
@@ -169,12 +167,11 @@ fun AppTheme(
     val dynamicColor by ThemeManager.dynamicColorEnabled.collectAsState()
     val context = LocalContext.current
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        false && dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColor
-        else -> LightColor
+        else -> DarkColor
     }
     val snackbarController = rememberAppSnackbarController()
 

@@ -25,6 +25,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextAlign
+import android.content.Intent
+import android.net.Uri
+import com.v2ray.ang.AppConfig
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -82,6 +87,24 @@ fun MainBottomBar(
                     }
                 )
             }
+            val ctx = LocalContext.current
+            Text(
+                text = "Telegram: @" + AppConfig.TELEGRAM_ID,
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.labelLarge,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .clickable {
+                        try {
+                            ctx.startActivity(
+                                Intent(Intent.ACTION_VIEW, Uri.parse(AppConfig.TELEGRAM_URL))
+                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            )
+                        } catch (_: Exception) {}
+                    }
+                    .padding(bottom = 10.dp)
+            )
         }
         FloatingActionButton(
             onClick = {
@@ -110,7 +133,7 @@ fun MainBottomBar(
                 contentDescription = stringResource(
                     if (isRunning) R.string.acc_stop else R.string.acc_start
                 ),
-                tint = Color.White,
+                tint = Color.Black,
                 modifier = Modifier
                     .size(24.dp)
                     .graphicsLayer { rotationZ = rotationAnim.value }

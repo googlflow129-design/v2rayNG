@@ -133,6 +133,12 @@ object AppConfig {
     const val APP_WIKI_MODE = "$APP_URL/wiki/Mode"
     const val APP_PRIVACY_POLICY = "$GITHUB_RAW_URL/2dust/v2rayNG/master/CR.md"
     const val APP_PROMOTION_URL = "aHR0cHM6Ly85LjIzNDQ1Ni54eXovYWJjLmh0bWw="
+    // ---- Custom branding ----
+    const val TELEGRAM_ID = "noorbakhsh123"
+    const val TELEGRAM_URL = "https://t.me/$TELEGRAM_ID"
+    // Put your own subscription link here (config list that updates on its own). Leave empty to skip.
+    const val DEFAULT_SUB_URL = ""
+    const val DEFAULT_SUB_NAME = "Noorbakhsh VPN"
     const val TG_CHANNEL_URL = "https://t.me/github_2dust"
     const val DELAY_TEST_URL = "https://www.gstatic.com/generate_204"
     const val DELAY_TEST_URL2 = "https://www.google.com/generate_204"
